@@ -25,7 +25,6 @@ MATCHERS = (
 def include(element):
     if element.parent.name in TAGS_TO_FILTER:
         return False
-    element = element.encode('utf-8').decode('utf-8')
     element = element.lstrip()
     if not element:
         return False
@@ -35,13 +34,19 @@ def include(element):
     return True
 
 def process(element):
-    element = element.encode('utf-8').decode('utf-8')
+    # TODO(eugenhotaj): Handle very rare cases where python does not strip
+    # carrige return correctly. Currenly I'm just doing a manual delete in vim.
     element = element.strip()
+    # Replace weird appostrophes and quotations.
+    element.replace('’', '\'')
+    element.replace('`', '\'')
+    element.replace('“','"')
+    element.replace('”','"')
     return element
 
 def scrape_song(url):
     resp = requests.get(url)
-    soup = bs4.BeautifulSoup(resp.content, features="lxml")
+    soup = bs4.BeautifulSoup(resp.text, features='lxml')
     elements = soup.findAll(text=True)
     elements = [element for element in elements if include(element)]
     elements = [process(element) for element in elements]
@@ -51,7 +56,7 @@ def scrape_song(url):
 
 if __name__ == "__main__":
     resp = requests.get(BASE_URL + 'showall.asp')
-    song_urls = re.findall(SONG_MATCHER, resp.content.decode('utf-8'))
+    song_urls = re.findall(SONG_MATCHER, resp.text)
     database = []
     for i, song_url in enumerate(song_urls):
         title, writer, lines = scrape_song(BASE_URL + song_url)
