@@ -65,7 +65,7 @@ if __name__ == "__main__":
             print("Scraped %d files; %d remaining." % (i, len(song_urls) - i))
 
 
-    with open('songs.txt', 'w') as file_:
+    with open('dataset.txt', 'w') as file_:
         for title, writer, lines in database:
             line = "{}\t{}\t{}\n".format(title, writer, "\\".join(lines))
             file_.write(line)

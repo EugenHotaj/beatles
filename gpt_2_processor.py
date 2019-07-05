@@ -33,7 +33,7 @@ the start of the next song. E.g.:
 """
 
 if __name__ == '__main__':
-    with open('songs.txt', 'r') as file_:
+    with open('dataset.txt', 'r') as file_:
         songs = file_.readlines()
 
     dataset = ''
@@ -46,7 +46,7 @@ if __name__ == '__main__':
             dataset += lyric + '\n'
         dataset += '\n\n'
 
-    with open('gpt2_songs.txt', 'w') as file_:
+    with open('gpt_2_dataset.txt', 'w') as file_:
         file_.write(dataset)
 
 

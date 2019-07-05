@@ -72,7 +72,7 @@ def create_bigrams(line):
     return bigrams
 
 if __name__ == '__main__':
-    with open('songs.txt') as file_:
+    with open('dataset.txt') as file_:
         songs = file_.readlines()
     lines = []
     for song in songs:
