@@ -18,8 +18,6 @@ class ProbabilisticBigramLanguageModel(object):
 
     Given a list of bigrams, the model builds a probability distribution
     over the bigrams.
-
-    TODO(eugenhotaj): Flesh out.
     """
 
     def __init__(self):
